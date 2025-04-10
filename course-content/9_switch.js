@@ -30,23 +30,23 @@ switch (값) {
 //     console.log("아직 등록되지 않은 MBTI에요. 다시 확인해주세요!");
 // }
 
-const month = 15;
-/* 날짜 if문으로 구분하기 OR 연산자 사용해서!
-if (
-  month == 1 ||
-  month == 3 ||
-  month == 5 ||
-  month == 7 ||
-  month == 8 ||
-  month == 10 ||
-  month == 12
-) {
-  console.log(`${month}월의 마지막 일자는 31일입니다.`);
-} else if (month == 2) {
-  console.log(`${month}월의 마지막 일자는 28일입니다.`);
-} else if (month == 4 || month == 6 || month == 9 || month == 11) {
-  console.log(`${month}월의 마지막 일자는 30일입니다.`);
-} */
+// const month = 11;
+// // 날짜 if문으로 구분하기 OR 연산자 사용해서!
+// if (
+//   month == 1 ||
+//   month == 3 ||
+//   month == 5 ||
+//   month == 7 ||
+//   month == 8 ||
+//   month == 10 ||
+//   month == 12
+// ) {
+//   console.log(`${month}월의 마지막 일자는 31일입니다.`);
+// } else if (month == 2) {
+//   console.log(`${month}월의 마지막 일자는 28일입니다.`);
+// } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+//   console.log(`${month}월의 마지막 일자는 30일입니다.`);
+// }
 
 /* Switch로 풀어보기
 switch (month) {
@@ -91,7 +91,8 @@ switch (month) {
   만약 break가 없으면 조건에 부합한 case에서는 당연히 실행되고 조건이 부합하진않지만 
   존재하는 다음 case에 적용된다. break가 있을 때까지
 */
-
+const month = 11;
+// switch 구문에서 결과값이 동일한 case들을 묶어서 조건문 완성해보기
 switch (month) {
   case 1:
   case 3:
