@@ -35,5 +35,9 @@
         (1) for .. of : index가 필요없을 때
         (2) forEach : 함수형 스타일로 배열 반복
 
-3. 2D 배열
-        행렬
+3. 2D 배열 : 2차원 행렬(matrix)
+
+** 함수 **
+1. function (입력값){
+        return 결과값
+}
