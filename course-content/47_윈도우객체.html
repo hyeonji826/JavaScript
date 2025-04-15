@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>윈도우 객체</title>
+  </head>
+  <body>
+    <script>
+      // setTimeout : 특정시간이 지난 후 콜백함수를 실행
+      const hello = function () {
+        alert("안녕하세요 JavaScript");
+      };
+      const st = setTimeout(hello, 4000);
+      clearTimeout(st);
+
+      // setInterval : 특정 시간동안 반복하여 콜백함수를 실행
+      const si = setInterval(hello, 3000);
+      const clearInter = function () {
+        clearInterval(si);
+        alert("Hello 함수가 중지됨");
+      };
+    </script>
+    <button onclick="clearInter()">중지</button>
+  </body>
+</html>

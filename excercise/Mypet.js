@@ -43,3 +43,53 @@ class Hamster extends Pet {
     console.log(`[햄스터] ${this.name}: 찍찍..! `);
   }
 }
+
+class PetManager {
+  constructor() {
+    this.pets = [];
+  }
+
+  addPet(pet) {
+    this.pets.push(pet);
+  }
+
+  simulateDay(day) {
+    console.log(`--- Day ${day} ---`);
+    this.pets.forEach((pet) => {
+      pet.speak();
+
+      const actions = ["eat", "play", "sleep"];
+      const action = actions[Math.floor(Math.random() * 3)];
+
+      pet[action]();
+      console.log(`${pet.name}은(는) ${action}()을 했습니다.`);
+      console.log(pet.getInfo());
+    });
+    console.log("----------------------");
+  }
+
+  showAllPets() {
+    console.log("--- 펫 목록 ---");
+    this.pets.forEach((pet) => {
+      console.log(pet.getInfo());
+    });
+  }
+}
+
+const names = ["달", "별", "태양", "호수", "바다"];
+const types = [Dog, Cat, Hamster];
+
+const manager = new PetManager();
+
+for (let i = 0; i < 3 + Math.floor(Math.random() * 3); i++) {
+  const name = names[Math.floor(Math.random() * names.length)];
+  const Type = types[Math.floor(Math.random() * types.length)];
+  const pet = new Type(name, Type.name);
+  manager.addPet(pet);
+}
+
+manager.showAllPets();
+
+for (let day = 1; day <= 3 + Math.floor(Math.random() * 3); day++) {
+  manager.simulateDay(day);
+}
