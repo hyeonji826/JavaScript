@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM</title>
+  </head>
+  <body>
+    <!-- 객체가 여러개 일땐 순서상 첫번째만 가져옴. -->
+    <p id="greeting">안녕하세요</p>
+    <p class="item">아이템 1</p>
+    <p class="item">아이템 2</p>
+    <p class="desc">첫 번째 문장</p>
+    <p class="desc">두 번째 문장</p>
+
+    <ul id="list">
+      <li>기존 항목</li>
+    </ul>
+
+    <img id="image" src="./images/cat.png" alt="이미지" />
+
+    <button onclick="changeText()">텍스트 바꾸기</button>
+    <button onclick="highlihtItems()">강조</button>
+    <button onclick="updateFirst()">첫 번째만 바꾸기</button>
+    <button onclick="addItem()">항목 추가</button>
+    <button onclick="changeImage()">이미지 변경</button>
+    <button onclick="removeText()">삭제</button>
+
+    <script>
+      function changeText() {
+        document.getElementById("greeting").innerText = "반가워요";
+      }
+      function highlihtItems() {
+        // 배열로 저장
+        const items = document.getElementsByClassName("item");
+        for (let i = 0; i < items.length; i++) {
+          items[i].style.color = "deeppink";
+        }
+      }
+      function updateFirst() {
+        // 먼저 나온 것만 ex.첫번째 문장
+        // document.querySelector(".desc").innerText = "바뀐 첫 문장";
+        const qs = document.querySelectorAll(".desc");
+        for (let i = 0; i < qs.length; i++) {
+          qs[i].innerText = "바뀐 첫 문장";
+        }
+      }
+
+      function addItem() {
+        // <li></li>
+        const newItem = document.createElement("li");
+        // <li>"<a href='http://www.naver.com'>네이버</a>"</li>
+        newItem.innerHTML = "<a href='http://www.naver.com'>네이버</a>";
+        document.getElementById("list").appendChild(newItem);
+      }
+      function changeImage() {
+        document
+          .getElementById("image")
+          .setAttribute("src", "./images/dog.png");
+      }
+      function removeText() {
+        document.getElementById("greeting").remove();
+      }
+    </script>
+  </body>
+</html>

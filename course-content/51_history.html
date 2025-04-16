@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>history 객체</title>
+  </head>
+  <body>
+    <h2>history 객체</h2>
+    <button onclick="goBack()">뒤로가기</button>
+    <button onclick="goForward()">앞으로 가기</button>
+    <button onclick="goSteps(-2)">2단계 뒤로 가기</button>
+    <button onclick="showHistoryLength()">방문 기록 개수</button>
+
+    <script>
+      function goBack() {
+        history.back();
+      }
+      function goForward() {
+        history.forward();
+      }
+      function goSteps(n) {
+        history.go(n);
+      }
+      function showHistoryLength() {
+        alert("방문 기록 수 :" + history.length);
+      }
+    </script>
+  </body>
+</html>

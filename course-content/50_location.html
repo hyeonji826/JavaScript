@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>location 객체</title>
+  </head>
+  <body>
+    <h2>location 객체</h2>
+    <button onclick="showLocationINfo()">주소 정보 보기</button>
+    <button onclick="goToNaver()">네이버로 이동</button>
+    <button onclick="reloadPage()">페이지 새로고침</button>
+
+    <script>
+      function showLocationINfo() {
+        console.log("전체 URL: ", location.href);
+        console.log("프로토콜: ", location.protocol);
+        console.log("호스트: ", location.host);
+        console.log("호스트명: ", location.hostname);
+        console.log("포트번호: ", location.port);
+        console.log("경로: ", location.pathname);
+        console.log("쿼리 문자열: ", location.search);
+        console.log("해시값: ", location.hash);
+      }
+
+      function goToNaver() {
+        location.href = "http://www.naver.com";
+      }
+
+      function reloadPage() {
+        location.reload();
+      }
+    </script>
+  </body>
+</html>

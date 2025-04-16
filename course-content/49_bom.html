@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>window 객체</title>
+</head>
+<body>
+  <h2>window 객체</h2>
+  <button onclick="showWindowInfo()">브라우저 정보 보기</button>
+
+  <script>
+    function showWindowInfo() {
+      console.log("브라우저 이름:", window.navigator.appName);
+      console.log("브라우저 엔진:", window.navigator.product);
+      console.log("사용자 에이전트:", window.navigator.userAgent);
+
+      console.log("현재 페이지 URL:", window.location.href);
+
+      console.log("창 너비:", window.innerWidth);
+      console.log("창 높이:", window.innerHeight);
+
+      window.setTimeout(function () {
+        window.alert("3초가 지났습니다!");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

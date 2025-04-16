@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>이벤트 객체</title>
+    <style>
+      #clickArea {
+        width: 300px;
+        height: 150px;
+        background-color: #f0f0f0;
+        border: 1px solid #aaa;
+        line-height: 150px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- enter 키 치면 새로운 어떠한 창으로 이동 -->
+    <form action="./resgist" method="post">
+      <h2>이벤트 객체를 확인해보세요</h2>
+
+      <div id="clickArea">여기를 클릭하세요</div>
+      <input type="text" id="inputBox" placeholder="키보드를 눌러보세요" />
+    </form>
+    <script>
+      // 1. 마우스 클릭 시 이벤트 객체 확인
+      document
+        .getElementById("clickArea")
+        .addEventListener("click", function (event) {
+          alert(
+            `클릭한 위치(좌표):X=${event.clientX},Y=${event.clientY}\n` +
+              `이벤트 타입: ${event.type}\n` +
+              `이벤트 대상 ID: ${event.target.id}`
+          );
+        });
+
+      document
+        .getElementById("inputBox")
+        .addEventListener("keydown", function () {
+          console.log("입력된 키: ", event.key);
+          console.log("코드: ", event.code);
+          console.log("이벤트 발생한 요소: ", event.target);
+        });
+      document
+        .getElementById("inputBox")
+        .addEventListener("keypress", function () {
+          if (event.key == "Enter") {
+            event.preventDefault();
+            alert('엔터키는 막았어요!')
+          }
+        });
+    </script>
+  </body>
+</html>

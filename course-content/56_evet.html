@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event</title>
+  </head>
+  <body>
+    <h2>이벤트</h2>
+    <!-- 함수와 이벤트를 일대일대응 -->
+    <button onclick="sayHello()">인사하기</button>
+    <button id="btn">누르세요</button>
+    <button id="eventBtn">이벤트 리스너 사용</button>
+
+    <script>
+      function sayHello() {
+        alert("안녕하세요!!");
+      }
+      const btn = document.getElementById("btn");
+      btn.onclick = function () {
+        alert("버튼이 클릭되었습니다!!");
+      };
+      const eventBtn = document.getElementById("eventBtn");
+      eventBtn.addEventListener("click", function () {
+        alert("addEventListener로 연결된 이벤트입니다.");
+      });
+      eventBtn.addEventListener("mouseenter", function () {
+        eventBtn.style.backgroundColor = "deepskyblue";
+      });
+    </script>
+  </body>
+</html>
