@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LocalStorage</title>
+  </head>
+  <body>
+    <input type="text" id="username" placeholder="이름을 입력하세요" />
+    <button onclick="saveName()">저장</button>
+    <p id="welcome"></p>
+    <hr />
+    <button onclick="saveUser()">사용자 저장</button>
+    <button onclick="loadUser()">사용자 불러오기</button>
+    <div id="info"></div>
+
+    <script>
+      function saveName() {
+        const name = document.getElementById("username").value;
+        localStorage.setItem("userName", name);
+        document.getElementById("welcome").innerText = `환영합니다.${name}님!`;
+      }
+
+      function saveUser() {
+        const user = {
+          name: "김사과",
+          age: 20,
+          job: "개발자",
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      function loadUser() {
+        const data = localStorage.getItem("user");
+        if (data) {
+          const user = JSON.parse(data);
+          document.getElementById(
+            "info"
+          ).innerText = `이름: ${user.name},나이: ${user.age},직업: ${user.job}`;
+        }
+      }
+    </script>
+  </body>
+</html>

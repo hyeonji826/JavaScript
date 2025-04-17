@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookie</title>
+  </head>
+  <body>
+    <div
+      id="popup"
+      style="
+        padding: 20px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        width: 300px;
+      "
+    >
+      <p><strong>[공지]</strong>신규 강의가 업데이트 되었습니다!</p>
+      <label><input type="checkbox" id="hideToday" />오늘 하루 보지 않기</label>
+      <button onclick="closePopup()">닫기</button>
+    </div>
+
+    <script>
+      // 쿠키 설정 함수
+      function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + days * 1000 * 60 * 60 * 24);
+        const expries = "expries =" + d.toUTCString();
+        // console.log(expries);
+        document.cookie = `${name}=${value}; ${expries};path=/`;
+      }
+
+      // 팝업 닫기
+      function closePopup() {
+        const checkbox = document.getElementById("hideToday");
+        if (checkbox.checked) {
+          setCookie("hidePopup", "true", 1);
+          //   alert("팝업 체크박스 체크됨");
+        }
+        document.getElementById("popup").style.display = "none";
+      }
+    </script>
+  </body>
+</html>

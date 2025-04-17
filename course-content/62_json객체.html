@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON 객체</title>
+  </head>
+  <body>
+    <input type="text" id="userid" placeholder="아이디 입력" />
+    <input type="text" id="userpw" placeholder="비밀번호 입력" />
+    <button type="button" onclick="saveUser()">저장</button>
+    <hr />
+    <table border="1" id="userTable">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>나이</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      function saveUser() {
+        const userid = document.getElementById("userid").value;
+        const userpw = document.getElementById("userpw").value;
+
+        const user = {
+          userid: userid,
+          userpw: userpw,
+        };
+        console.log("JSON 문자열 :", JSON.stringify(user));
+      }
+
+      const users = [
+        { name: "김사과", age: 20 },
+        { name: "반하나", age: 25 },
+        { name: "오렌지", age: 30 },
+      ];
+
+      const tbody = document.querySelector("#userTable tbody");
+
+      users.forEach((user) => {
+        const row = `<tr><td> ${user.name}</td><td>${user.age}</td></tr>`;
+        tbody.innerHTML += row;
+      });
+    </script>
+  </body>
+</html>

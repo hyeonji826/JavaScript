@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON 배열</title>
+  </head>
+  <body>
+    <ul id="fruits"></ul>
+    <ul id="profile"></ul>
+
+    <script>
+      const fruits = ["사과", "바나나", "포도"];
+      const list = document.getElementById("fruits");
+
+      fruits.forEach((fruit) => {
+        // <li></li>
+        const li = document.createElement("li");
+        // <li>사과</li>
+        li.textContent = fruit;
+        list.appendChild(li);
+      });
+
+      const user = {
+        name: "김사과",
+        age: 20,
+        address: {
+          city: "서울",
+          zip: "12345",
+        },
+      };
+      const div = document.getElementById("profile");
+      div.innerHTML = `
+        <p>이름 : ${user.name}</p>
+        <p>도시 : ${user.address.city}</p>
+        <p>우편번호 : ${user.address.zip}</p>
+      `;
+    </script>
+  </body>
+</html>
