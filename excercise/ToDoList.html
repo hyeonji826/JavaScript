@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoList</title>
+  </head>
+  <body>
+    <div
+      style="
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        width: 500px;
+        text-align: center;
+      "
+    >
+      <h2>나의 할 일</h2>
+      <input type="text" id="todoInput" placeholder="할일 입력" />
+      <button onclick="addTodo()">저장</button>
+
+      <h3>할 일 목록</h3>
+      <ul id="todoList"></ul>
+    </div>
+
+    <script>
+      let changeLi = null;
+
+      function addTodo() {
+        const input = document.getElementById("todoInput");
+        const todoText = input.value.trim();
+        const todoList = document.getElementById("todoList");
+
+        if (todoText !== "") {
+          const li = document.createElement("li");
+
+          // 입력
+          const todoInput = document.createElement("input");
+          todoInput.type = "text";
+          todoInput.value = todoText;
+          todoInput.disabled = true;
+
+          // 수정
+          const changeBtn = document.createElement("button");
+          changeBtn.textContent = "수정";
+          changeBtn.style.marginLeft = "8px";
+          changeBtn.onclick = function () {
+            todoInput.disabled = false;
+            todoInput.focus();
+          };
+          todoInput.onblur = function () {
+            todoInput.disabled = true;
+          };
+
+          // 삭제
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "삭제";
+          deleteBtn.style.marginLeft = " 8px";
+          deleteBtn.onclick = function () {
+            todoList.removeChild(li);
+          };
+
+          li.appendChild(todoInput);
+          li.appendChild(deleteBtn);
+          li.appendChild(changeBtn);
+          todoList.appendChild(li);
+          input.value = "";
+        }
+      }
+    </script>
+  </body>
+</html>

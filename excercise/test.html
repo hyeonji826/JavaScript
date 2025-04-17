@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div
+    style="
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      width: 500px;
+      text-align: center;
+    "
+  >
+    <h2>나의 할 일</h2>
+    <input type="text" id="todoInput" placeholder="할일 입력" />
+    <button onclick="addTodo()">저장</button>
+
+    <h3>할 일 목록</h3>
+    <ul id="todoList"></ul>
+    <button onclick="changeList()">수정</button>
+    <button onclick="deleteList()">삭제</button>
+  </div>
+    <script>
+        function addTodo() {
+  const input = document.getElementById("todoInput");
+  const todoText = input.value.trim();
+  const todoList = document.getElementById("todoList");
+
+  if (todoText !== "") {
+    // 수정 중이면 기존 li 내용만 바꾼다
+    if (editingLi) {
+      editingLi.firstChild.textContent = todoText; // 텍스트만 수정
+      editingLi = null; // 수정 모드 해제
+      input.value = "";
+      return;
+    }
+
+    const li = document.createElement("li");
+
+    // 텍스트 노드
+    const span = document.createElement("span");
+    span.textContent = todoText;
+
+    // ❌ 삭제 버튼
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.style.marginLeft = "10px";
+    deleteBtn.onclick = function () {
+      todoList.removeChild(li);
+    };
+
+    // ✏ 수정 버튼
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✏";
+    editBtn.style.marginLeft = "5px";
+    editBtn.onclick = function () {
+      input.value = span.textContent; // 입력창에 기존 내용 표시
+      editingLi = li;                 // 지금 수정 중인 li 기억
+    };
+
+    // li 조립
+    li.appendChild(span);
+    li.appendChild(deleteBtn);
+    li.appendChild(editBtn);
+    todoList.appendChild(li);
+
+    input.value = ""; // 입력창 비우기
+  }
+}
+
+    </script>
+</body>
+</html>

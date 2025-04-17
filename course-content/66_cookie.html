@@ -27,7 +27,19 @@
         d.setTime(d.getTime() + days * 1000 * 60 * 60 * 24);
         const expries = "expries =" + d.toUTCString();
         // console.log(expries);
+        // 쿠키 파일에 아래와 같은 텍스트 데이터로 들어가있음
         document.cookie = `${name}=${value}; ${expries};path=/`;
+      }
+
+      // 쿠키 읽기 함수
+      function getCookie(name) {
+        const decodedCooike = decodeURIComponent(document.cookie);
+        const cookies = decodedCooike.split();
+        for (let cookie of cookies) {
+          const [key, value] = cookie.split("=");
+          if (key === name) return value;
+        }
+        return null;
       }
 
       // 팝업 닫기
@@ -39,6 +51,12 @@
         }
         document.getElementById("popup").style.display = "none";
       }
+
+      window.onload = function () {
+        if (getCookie("hidePopup") === "true") {
+          document.getElementById("popup").style.display = "none";
+        }
+      };
     </script>
   </body>
 </html>

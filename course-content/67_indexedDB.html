@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IndexedDB</title>
+  </head>
+  <body>
+    <h2>✅ 내 메모장</h2>
+    <input type="text" id="noteInput" placeholder="메모 입력" />
+    <button onclick="saveNote()">저장</button>
+
+    <ul id="noteList"></ul>
+
+    <script>
+      let db;
+
+      const request = indexedDB.open("MyNotesDB", 1);
+
+      request.onupgradeneeded = function (e) {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains("notes")) {
+          db.createObjectStore("note", { ketPath: "id", autoIncrement: true });
+        }
+      };
+
+      request.onsuccess = function (e) {
+        db = e.target.result;
+        displayNotes();
+      };
+
+      request.onerror = function () {
+        alert("IndexedDB 열기 실패");
+      };
+
+      function displayNote() {
+        const list = document.getElementById("noteList");
+        list.innerHTML = "";
+
+        const tx = db.transaction("notes", "readonly");
+        const store = tx.objectStore("notes");
+        const request = store.openCursor();
+
+        request.onsucces = function (e) {
+          const cursor = e.target.result;
+          if (cursor) {
+            const li = document.getElementById("li");
+            li.textContent = `[${cursor.value.created.toLocaleString()}] ${
+              cursor.value.text
+            }`;
+            list.appendChild(li);
+            cursor.continue();
+          }
+        };
+      }
+
+      function saveNote() {
+        const input = document.getElementById("noteInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const tx = db.transaction("note", "readwrite");
+        const store = tx.objectStore("note");
+        store.add({ text: text, created: new Date() });
+
+        tx.oncomplete = function () {
+          input.value = "";
+          displayNote();
+        };
+      }
+    </script>
+  </body>
+</html>
