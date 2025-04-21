@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Async</title>
+  </head>
+  <body>
+    <script>
+      function orderCoffee(menu) {
+        console.log(`${menu} 주문을 접수했습니다. 잠시만 기다려주세요`);
+        const availableMenu = ["아메리카노", "카페라뗴", "바닐라라떼"];
+
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (availableMenu.includes(menu)) {
+              resolve(`${menu}가 준비되었습니다. 맛있게 드세요`);
+            } else {
+              reject(`죄송합니다.${menu}는 판매하지 않습니다.`);
+            }
+          }, 2000);
+        });
+      }
+      //   async ~ await 방식
+      async function startOrder() {
+        try {
+          // 성공처리
+          const result = await orderCoffee("녹차");
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          console.log("주문이 완료되었습니다.");
+        }
+      }
+      startOrder();
+    </script>
+  </body>
+</html>

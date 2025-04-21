@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관광지 체감기후지수</title>
+    <!-- 
+        <script> :순서가 중요. html과 함께 순서대로 처리
+        <script defer> : DOM 요소 접근 오류 방지. 로딩 최적화.HTML이 모두 실행된 후 처리
+        + window.onload() 와 비슷한 기능 (= 일단 html 다 읽고나서 실행해줘!)
+    -->
+    <script
+      defer
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71c12894529426090311798eeac87528&autoload=false&libraries=services"
+    ></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2rem;
+      }
+      select,
+      button {
+        font-size: 1rem;
+        padding: 0.5rem;
+      }
+      #weatherInfo {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: #f7f7f7;
+      }
+      .grade {
+        font-weight: bold;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        display: inline-block;
+      }
+      .매우좋음 {
+        background: #1abc9c;
+        color: white;
+      }
+      .좋음 {
+        background: #2ecc71;
+        color: white;
+      }
+      .보통 {
+        background: #f1c40f;
+        color: black;
+      }
+      .나쁨 {
+        background: #e67e22;
+        color: white;
+      }
+      .매우나쁨 {
+        background: #e74c3c;
+        color: white;
+      }
+      #map {
+        width: 100%;
+        height: 400px;
+        margin-top: 2rem;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>관광지 체감기후지수</h2>
+    <label for="region">지역 선택</label>
+    <select name="region" id="region">
+      <option value="서울 중구|1111000000">서울 중구</option>
+      <option value="부산 중구|2611000000">부산 중구</option>
+      <option value="대구 중구|2711000000">대구 중구</option>
+      <option value="인천 중구|2811000000">인천 중구</option>
+      <option value="광주 동구|2911000000">광주 동구</option>
+      <option value="대전 중구|3011000000">대전 중구</option>
+      <option value="울산 남구|3114000000">울산 남구</option>
+      <option value="세종|3611000000">세종</option>
+      <option value="강릉시|4215000000">강릉시</option>
+      <option value="청주시|4311000000">청주시</option>
+      <option value="전주시|4511000000">전주시</option>
+      <option value="목포시|4611000000">목포시</option>
+      <option value="창원시|4812000000">창원시</option>
+      <option value="제주 제주시|5011000000">제주 제주시</option>
+      <option value="제주 서귀포시|5013000000" selected>제주 서귀포시</option>
+    </select>
+    <button onclick="loadData()">조회하기</button>
+    <div id="weatherInfo">데이터를 불러오는 중입니다....</div>
+    <div id="map"></div>
+
+    <script>
+      let map;
+      let marker;
+      const serviceKey =
+        "fQlfPKnYI5jKgbG0KRQHAE1byN6vF46OBF/B7t4svBhp/3n+vsVBaK322v5yH+AJbtMYn5d80ICQgzXeIlxbcw==";
+
+      function loadData() {
+        console.log("loadData 호출");
+        // 서울 중구|1111000000
+        const selected = document.getElementById("region").value;
+        // 서울 중구(날려버리기) | cityAreaId = 1111000000
+        const [, cityAreaId] = selected.split("|");
+        const now = new Date();
+        const CURRENT_DATE = `${now.getFullYear()}${String(
+          now.getMonth() + 1
+        ).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}00`;
+        const DAY = 3;
+        const url = `https://apis.data.go.kr/1360000/TourStnInfoService1/getCityTourClmIdx1?serviceKey=${encodeURIComponent(
+          serviceKey
+        )}&pageNo=1&numOfRows=10&dataType=JSON&CURRENT_DATE=${CURRENT_DATE}&DAY=${DAY}&CITY_AREA_ID=${cityAreaId}`;
+
+        console.log(url);
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            // JOSN.stringify(문자열로 바꿀 자바스크립트 객체, 필터링 함수, 공백 수)
+            console.log("전체 응답 구조 확인: ", JSON.stringify(data, null, 2));
+
+            // optional chaning(옵셔널 체이닝,?): data -> responese -> header 안전하게 접근
+            //  undefined나 null이 아닐 겨웅header에 접근
+            const header = data.response?.header;
+            const body = data.response?.body;
+
+            if (header?.resultCode !== "00") {
+              document.getElementById("weatherInfo").innerText =
+                "해당 지역의 데이터가 없습니다.";
+              return;
+            }
+            const items = body?.items?.item;
+            if (!items || items.length === 0) {
+              document.getElementById("weatherInfo").innerText =
+                "해당 지역의 데이터가 없습니다.";
+              return;
+            }
+            let html = "";
+            items.forEach((item, index) => {
+              html += `
+        <strong>날짜:</strong> ${item.tm}<br>
+        <strong>지역:</strong> ${item.totalCityName}<br>
+        <strong>체감기후지수:</strong> ${item.kmaTci}<br>
+        <strong>등급:</strong>
+        <span class="grade ${item.TCI_GRADE}">${item.TCI_GRADE}</span>
+        <hr>
+      `;
+              if (index === 0) {
+                moveMapByCityName(item.totalCityName);
+              }
+            });
+
+            document.getElementById("weatherInfo").innerHTML = html;
+          })
+          .catch((err) => {
+            console.error("fetch 실패 또는 파싱 오류", err);
+            document.getElementById("weatherInfo").innerText =
+              "데이터 불러오기 실패";
+          });
+      }
+
+      function moveMapByCityName(address) {
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(address, function (result, status) {
+          if (status === kakao.maps.services.Status.OK) {
+            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            map.setCenter(coords);
+            if (marker) marker.setMap(null);
+            marker = new kakao.maps.Marker({
+              map: map,
+              position: coords,
+            });
+          } else {
+            console.warn("주소를 찾을 수 없습니다:", address);
+          }
+        });
+      }
+
+      window.onload = function () {
+        kakao.maps.load(function () {
+          // 서귀포시 초기 중심
+          map = new kakao.maps.Map(document.getElementById("map"), {
+            center: new kakao.maps.LatLng(33.2539, 126.5596),
+            // 확대 정도
+            level: 9,
+          });
+          loadData(); // 초기 로딩
+        });
+      };
+    </script>
+  </body>
+</html>

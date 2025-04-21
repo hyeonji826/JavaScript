@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>예외처리</title>
+  </head>
+  <body>
+    <!--
+        문법 오류(Syntax Error) : 코드 자체에 문법적 문제가 있는 경우
+        런타임 오류(Runtime Error) : 코드 실행 중 예기치 않은 상황이 발생한 경우 
+
+        try{
+            오류가 발생할 수 있는 코드
+            .... 오류가 발생하자마자 catch로 보냄
+        }.catch(error){
+            오류 발생 시 실행되는 코드
+        }.finally{
+            오류 발생 여부와 상관없이 항상 실행되는 코드(선택)
+        }
+     -->
+    <script>
+      /*
+      function divide(a, b) {
+        try {
+          if (a === 0 || b === 0) {
+            throw new Error("0으로 나눌 수 없습니다.");
+          }
+          console.log(a / b);
+        } catch (err) {
+          console.log("오류 발생: ", err.message);
+        }
+      }
+
+      //   try{},catch{} 처리하기 때문에 오류가 나더라도 프로그램이 멈추지 않고 끝까지 작동한다.
+      divide(10, 2);
+      divide(10, 0);
+      console.log("프로그램을 종료합니다."); */
+      function getAgeInput(input) {
+        try {
+          if (!input) throw new Error("입력이 없습니다.");
+          console.log("입력한 나이: ", input);
+          const age = Number(input);
+          if (isNaN(age)) throw new Error("숫자를 입력해야 합니다.");
+          if (age < 0) throw new Error("나이는 음수가 될 수 없습니다.");
+        } catch (err) {
+          console.log("오류:", err.message);
+        } finally {
+          console.log("나이 출력 결과가 끝났습니다.");
+        }
+      }
+      getAgeInput("20");
+      getAgeInput("");
+      getAgeInput("스무살");
+      getAgeInput("-20"); // 여기서 프로그램 종료!
+      console.log("프로그램을 종료합니다.");
+    </script>
+  </body>
+</html>

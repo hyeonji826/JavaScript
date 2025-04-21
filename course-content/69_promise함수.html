@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise 함수</title>
+  </head>
+  <body>
+    <script>
+      function getBanana() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("🍌");
+          }, 1000);
+        });
+      }
+
+      function getApple() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve("🍎");
+          }, 3000);
+        });
+      }
+      function getOrange() {
+        // .reject(new Error) : js에서 일부러 에러를 내게 해주는 변수
+        return new Promise.reject(new Error("오렌지 없음"));
+      }
+      getBanana()
+        .then((banana) => getApple().then((apple) => [banana, apple]))
+        // console.log 생략법
+        .then(console.log);
+
+      // Promise.all : 벙렬적으로 한번에 Promise들을 실행. 하나의 프로미스라도 실패하면 전체를 에러로 처리함
+      Promise.all([getBanana(), getApple()]).then((fruits) =>
+        console.log("all", fruits)
+      );
+
+      //   Promise.race : 주어진 Promise중에 가장 빨리 수행된 것이 실행
+      Promise.race([getBanana(), getApple()]).then((fruits) =>
+        console.log("race", fruits)
+      );
+
+      //   Promise.allSettled : 여러 프로미스를 병렬적으로 처리하되 하나의 프로미스가 실패해도 무조건 이행
+      Promise.allSettled([getBanana(), getApple(), getOrange()])
+        .then((fruits) => console.log("allSettled", fruits))
+        .catch(console.log);
+    </script>
+  </body>
+</html>
