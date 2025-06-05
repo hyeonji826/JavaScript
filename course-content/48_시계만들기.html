@@ -7,36 +7,6 @@
   </head>
   <body>
     <script>
-      /*
-            console에 '년-월-일 시:분:초' 형태로 1초마다 출력하는 시계를 만들어보자.
-            (단, 화면 '시작','중지'버튼을 만들어 시작을 누르면 시계가 작동하고
-            중지를 누르면 시계가 중지되도록함)
-        */
-       // 내가 한거 
-       /*
-       let time = null
-       const printTime = function (){
-        const now = new Date();
-      console.log(
-          `년 : ${now.getFullYear()} 월 : ${
-            now.getMonth() + 1
-          } 일 : ${now.getDate()} 시간 : ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
-        );
-       }
-   
-      const start = function () {
-        alert("시작합니다.");
-        if (time ===null){
-            time = setInterval(printTime,1000)
-        }
-      };
-      const finish = function () {
-        clearInterval(si);
-        time =null
-        alert("끝났습니다.");
-      }; */
-
-      // 강사님
       function makeClock(){
         const date = new Date()
         yy = date.getFullYear()
